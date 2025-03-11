@@ -1,0 +1,28 @@
+name: iOS Build
+
+on:
+  push:
+    branches:
+      - main  # Change to your main branch name
+
+jobs:
+  build:
+    runs-on: macos-latest  # Use macOS runner
+    
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Install Node.js and Dependencies
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18  # Set your preferred Node.js version
+      - run: npm install -g expo-cli eas-cli
+
+      - name: Set Up Expo EAS Build
+        run: eas build:configure
+
+      - name: Run EAS Build for iOS
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+        run: eas build --platform ios --non-interactive

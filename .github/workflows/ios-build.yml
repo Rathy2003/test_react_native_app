@@ -19,12 +19,7 @@ jobs:
           node-version: 18
       - run: npm install -g expo-cli eas-cli
 
-      - name: Authenticate with Expo
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas login --token $EXPO_TOKEN
-
       - name: Run EAS Build for iOS
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        run: eas build --platform ios --non-interactive
+        run: eas build --platform ios --non-interactive --no-wait
